@@ -1,77 +1,149 @@
+
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class ReadWrite {
-    public static void reader(String fileName, String delimiter) {
+
+    public List<Integer> read(String path) {
         try {
-            File file = new File(fileName);
+            File file = new File(path);
             FileReader fr = new FileReader(file);
-            BufferedReader br = new BufferedReader(fr);
-            String line = "";
+            BufferedReader reader = new BufferedReader(fr);
+
+            String line = " ";
             String[] tempArr;
-            List<Kelas> kl = new ArrayList<>();
-            while((line = br.readLine()) != null) {
-                Kelas kls = new Kelas();
-                tempArr = line.split(delimiter);
-                kls.setKelas(tempArr[0]);
-                kls.setNilai1(tempArr[1]);
-                kls.setNilai2(tempArr[2]);
-                kls.setNilai3(tempArr[3]);
-                kls.setNilai4(tempArr[4]);
-                kls.setNilai5(tempArr[5]);
-                kls.setNilai6(tempArr[6]);
-                kls.setNilai7(tempArr[7]);
-                kls.setNilai8(tempArr[8]);
-                kls.setNilai9(tempArr[9]);
-                kls.setNilai10(tempArr[10]);
-                kls.setNilai11(tempArr[11]);
-                kls.setNilai12(tempArr[12]);
-                kls.setNilai13(tempArr[13]);
-                kls.setNilai14(tempArr[14]);
-                kls.setNilai15(tempArr[15]);
-                kls.setNilai16(tempArr[16]);
-                kls.setNilai17(tempArr[17]);
-                kls.setNilai18(tempArr[18]);
-                kls.setNilai19(tempArr[19]);
-                kls.setNilai20(tempArr[20]);
-                kls.setNilai21(tempArr[21]);
-                kls.setNilai22(tempArr[22]);
-                kls.setNilai23(tempArr[23]);
-//                kls.setNilai24(tempArr[24]);
-//                kls.setNilai25(tempArr[25]);
-//                kls.setNilai26(tempArr[26]);
-//                kls.setNilai27(tempArr[27]);
-//                kls.setNilai28(tempArr[28]);
-                kl.add(kls);
+
+            List<Integer> listInt = new ArrayList<>();
+
+            while ((line = reader.readLine()) != null) {
+                tempArr = line.split(";");
+
+                for (int i = 0; i < tempArr.length; i++) {
+                    if (i == 0) {
+
+                    } else {
+                        String temp = tempArr[i];
+                        int intTemp = Integer.parseInt(temp);
+                        listInt.add(intTemp);
+                    }
+
+                }
             }
-//            for (int i=0; i<= kl.size();i++){
-//                System.out.print(i);
-//            }
-//            for (Kelas kelas : kl) {
-//                System.out.println("Kelas " + kelas.getKelas() + " Nilai " + kelas.getNilai1() + kelas.getNilai2()
-//                + kelas.getNilai3()+kelas.getNilai4()+ kelas.getNilai5()+kelas.getNilai6());
-//            }
-            br.close();
-        } catch(Exception e) {
+            reader.close();
+            return listInt;
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
+        return null;
     }
-    public static void writer(String fileName) {
+
+    public void write(String savePlace) {
+
+        Menu menu = new MenuExtend();
+        List<Integer> read = read(((MenuExtend) menu).file);
+
         try {
-            File file = new File(fileName);
-            if(file.createNewFile()) {
-                System.out.println("new File is being created");
+            File file = new File(savePlace);
+            if (file.createNewFile()) {
+                System.out.println("File Mean-Median-Modus tersimpan di -> " + savePlace);
             }
             FileWriter writer = new FileWriter(file);
             BufferedWriter bwr = new BufferedWriter(writer);
-            Penghitung hitung = new Penghitung();
-            bwr.write(hitung.modus());
+            bwr.write("Berikut Hasil Pengolahan Nilai:");
+            bwr.newLine();
+            bwr.write("Berikut hasil sebaran data nilai");
+            bwr.newLine();
+            bwr.write("Mean   : " + String.format("%.2f", mean(read)));
+            bwr.newLine();
+            bwr.write("Median : " + median(read) + "\n");
+            bwr.newLine();
+            bwr.write("Modus  : " + mode(read) + "\n");
+            bwr.newLine();
             bwr.flush();
             bwr.close();
-            System.out.println("Success writing to a file");
-        } catch(IOException ioe) {
-            ioe.printStackTrace();
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
+    }
+
+    public void writeMod(String saveMod) {
+
+        Menu menu = new MenuExtend();
+
+        try {
+            File file = new File(saveMod);
+            if (file.createNewFile()) {
+                System.out.println("File Modus Sekolah tersimpan di ->: " + saveMod);
+            }
+            FileWriter writer = new FileWriter(file);
+            BufferedWriter bwr = new BufferedWriter(writer);
+            Map<Integer, Integer> Map = freq(read(((MenuExtend) menu).file));
+            Set<Integer> key = Map.keySet();
+            bwr.write("Berikut Hasil Pengolahan Nilai:\n");
+            bwr.newLine();
+            bwr.write("Nilai" + "|" + "Frekuensi" + "\n");
+            bwr.newLine();
+            for (Integer nilai : key) {
+                bwr.write(nilai + "" + "|" + Map.get(nilai));
+            }
+            bwr.flush();
+            bwr.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private double mean(List<Integer> list) {
+        return list.stream()
+                .mapToDouble(d -> d)
+                .average()
+                .orElse(0.0);
+    }
+    private double median(List<Integer> list) {
+        Arrays.sort(new List[]{list});
+        double median;
+        if (list.size() % 2 == 0)
+            median = ((double) list.get(list.size() / 2) + (double) list.get(list.size() / 2 - 1)) / 2;
+        else
+            median = (double) list.get(list.size() / 2);
+        return median;
+    }
+
+    private int mode(List<Integer> list) {
+        HashMap<Integer, Integer> hm = new HashMap<>();
+        int max = 1;
+        int temp = 0;
+
+        for (Integer integer : list) {
+
+            if (hm.get(integer) != null) {
+
+                int count = hm.get(integer);
+                count++;
+                hm.put(integer, count);
+
+                if (count > max) {
+                    max = count;
+                    temp = integer;
+                }
+            } else
+                hm.put(integer, 1);
+        }
+        return temp;
+    }
+
+    private Map<Integer, Integer> freq(List<Integer> array) {
+        Set<Integer> distinct = new HashSet<>(array);
+        Map<Integer, Integer> Map = new HashMap<>();
+
+        for (Integer s : distinct) {
+            Map.put(s, Collections.frequency(array, s));
+        }
+        return Map;
     }
 }
