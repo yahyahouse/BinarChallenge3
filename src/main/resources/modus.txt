@@ -1,0 +1,5 @@
+Berikut Hasil Pengolahan Nilai:
+
+Nilai|Frekuensi
+
+5|16|27|628|429|5010|41

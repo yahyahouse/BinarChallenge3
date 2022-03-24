@@ -40,8 +40,8 @@ public class ReadWrite {
 
     public void write(String savePlace) {
 
-        Menu menu = new MenuExtend();
-        List<Integer> read = read(((MenuExtend) menu).file);
+        MenuShow menu = new MenuShow();
+        List<Integer> read = read("src/main/resources/data_sekolah.csv");
 
         try {
             File file = new File(savePlace);
@@ -71,7 +71,7 @@ public class ReadWrite {
 
     public void writeMod(String saveMod) {
 
-        Menu menu = new MenuExtend();
+        MenuShow menu = new MenuShow();
 
         try {
             File file = new File(saveMod);
@@ -80,7 +80,7 @@ public class ReadWrite {
             }
             FileWriter writer = new FileWriter(file);
             BufferedWriter bwr = new BufferedWriter(writer);
-            Map<Integer, Integer> Map = freq(read(((MenuExtend) menu).file));
+            Map<Integer, Integer> Map = freq(read("src/main/resources/data_sekolah.csv"));
             Set<Integer> key = Map.keySet();
             bwr.write("Berikut Hasil Pengolahan Nilai:\n");
             bwr.newLine();
