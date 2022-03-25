@@ -9,10 +9,8 @@ public class ReadWrite {
             File file = new File(path);
             FileReader fr = new FileReader(file);
             BufferedReader reader = new BufferedReader(fr);
-
             String line = " ";
             String[] tempArr;
-
             List<Integer> listInt = new ArrayList<>();
 
             while ((line = reader.readLine()) != null) {
@@ -20,13 +18,11 @@ public class ReadWrite {
 
                 for (int i = 0; i < tempArr.length; i++) {
                     if (i == 0) {
-
                     } else {
                         String temp = tempArr[i];
                         int intTemp = Integer.parseInt(temp);
                         listInt.add(intTemp);
                     }
-
                 }
             }
             reader.close();
@@ -42,7 +38,6 @@ public class ReadWrite {
 
         MenuShow menu = new MenuShow();
         List<Integer> read = read("src/main/resources/data_sekolah.csv");
-
         try {
             File file = new File(savePlace);
             if (file.createNewFile()) {
@@ -54,11 +49,11 @@ public class ReadWrite {
             bwr.newLine();
             bwr.write("Berikut hasil sebaran data nilai");
             bwr.newLine();
-            bwr.write("Mean   : " + String.format("%.2f", mean(read)));
+            bwr.write("Mean   : " +  mean(read));
             bwr.newLine();
-            bwr.write("Median : " + median(read) + "\n");
+            bwr.write("Median : " + median(read));
             bwr.newLine();
-            bwr.write("Modus  : " + mode(read) + "\n");
+            bwr.write("Modus  : " + modus(read));
             bwr.newLine();
             bwr.flush();
             bwr.close();
@@ -72,7 +67,6 @@ public class ReadWrite {
     public void writeMod(String saveMod) {
 
         MenuShow menu = new MenuShow();
-
         try {
             File file = new File(saveMod);
             if (file.createNewFile()) {
@@ -87,7 +81,7 @@ public class ReadWrite {
             bwr.write("Nilai" + "|" + "Frekuensi" + "\n");
             bwr.newLine();
             for (Integer nilai : key) {
-                bwr.write(nilai + "" + "|" + Map.get(nilai));
+                bwr.write(nilai + " " + "|" + Map.get(nilai));
             }
             bwr.flush();
             bwr.close();
@@ -98,23 +92,31 @@ public class ReadWrite {
 
     }
 
-    private double mean(List<Integer> list) {
-        return list.stream()
-                .mapToDouble(d -> d)
-                .average()
-                .orElse(0.0);
+    private int mean(List<Integer> list) {
+        return (int) list.stream()
+                    .mapToDouble(d -> d)
+                    .average()
+                    .orElse(0.0);
+
+
     }
-    private double median(List<Integer> list) {
-        Arrays.sort(new List[]{list});
-        double median;
-        if (list.size() % 2 == 0)
-            median = ((double) list.get(list.size() / 2) + (double) list.get(list.size() / 2 - 1)) / 2;
-        else
-            median = (double) list.get(list.size() / 2);
-        return median;
+    private double median(List<Integer> list) throws ArrayIndexOutOfBoundsException {
+        double median = 0;
+        try {
+            Arrays.sort(new List[]{list});
+            if (list.size() % 2 == 0)
+                median = ((double) list.get(list.size() / 2) + (double) list.get(list.size() / 2 - 1)) / 2;
+            else
+                median = (double) list.get(list.size() / 2);
+
+        } catch (Exception e) {
+            System.out.println("");
+        } finally{
+            return median;
+        }
     }
 
-    private int mode(List<Integer> list) {
+    private int modus(List<Integer> list) {
         HashMap<Integer, Integer> hm = new HashMap<>();
         int max = 1;
         int temp = 0;
