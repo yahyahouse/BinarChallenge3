@@ -1,6 +1,6 @@
 Berikut Hasil Pengolahan Nilai:
 Nilai | Frekuensi |
-5|  1|
+	 5|  1|
 6|  2|
 7|  62|
 8|  42|

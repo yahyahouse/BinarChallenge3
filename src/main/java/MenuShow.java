@@ -1,12 +1,14 @@
 import java.io.IOException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class MenuShow {
     Scanner scan = new Scanner(System.in);
-    public String file = "src/main/resources/data_sekolah.csv";
-    public String MeanMedianModus = "src/main/resources/MeanMedianModus.txt";
-    public String Modus = "src/main/resources/modus.txt";
-    public short Menu() throws IOException {
+    public static String file = "src/main/resources/data_sekolah.csv";
+    public static String MeanMedianModus = "src/main/resources/MeanMedianModus.txt";
+    public static String Modus = "src/main/resources/modus.txt";
+    public static void Menu() {
+        try {
         Scanner scan = new Scanner(System.in);
         ReadWrite readWrite = new ReadWrite();
         Menu menu = () -> {
@@ -18,20 +20,27 @@ public class MenuShow {
             System.out.println("2. Menghitung Modus Sekolah");
             System.out.println("0. Exit");
         };
-        menu.ShowMenu();
-        int  pilih = scan.nextInt();
-        switch (pilih){
-            case 1:
-                readWrite.write(MeanMedianModus);
-                break;
-            case 2:
-                readWrite.writeMod(Modus);
-                break;
-            case 0:
-                System.exit(0);
-                break;
+            menu.ShowMenu();
+            int pilih = scan.nextInt();
+            switch (pilih) {
+                case 1:
+                    readWrite.write(MeanMedianModus);
+                    break;
+                case 2:
+                    readWrite.writeMod(Modus);
+                    break;
+                case 0:
+                    System.exit(0);
+                    break;
+                default:
+                    System.err.println("Masukan pilihan yang benar!");
+                    Menu();
+            }
+        }catch (InputMismatchException | IOException e){
+            System.err.println(" Masukan pilihan dengan input angka "+ e.getMessage());
+            Menu();
         }
-        return 0;
+
     }
 }
 
