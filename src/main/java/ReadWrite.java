@@ -34,7 +34,7 @@ public class ReadWrite {
         return null;
     }
 
-    public void write(String savePlace) {
+    public short write(String savePlace) {
 
         MenuShow menu = new MenuShow();
         List<Integer> read = read("src/main/resources/data_sekolah.csv");
@@ -62,32 +62,41 @@ public class ReadWrite {
             e.printStackTrace();
         }
 
+        return 0;
     }
 
     public void writeMod(String saveMod) {
-
         MenuShow menu = new MenuShow();
+
         try {
             File file = new File(saveMod);
-            if (file.createNewFile()) {
-                System.out.println("File Modus Sekolah tersimpan di ->: " + saveMod);
-            }
             FileWriter writer = new FileWriter(file);
             BufferedWriter bwr = new BufferedWriter(writer);
-            Map<Integer, Integer> Map = freq(read("src/main/resources/data_sekolah.csv"));
-            Set<Integer> key = Map.keySet();
-            bwr.write("Berikut Hasil Pengolahan Nilai:\n");
+
+            Map<Integer, Integer> hMap = freq(read(menu.file));
+
+            bwr.write("Berikut Hasil Pengolahan Nilai:");
             bwr.newLine();
-            bwr.write("Nilai" + "|" + "Frekuensi" + "\n");
+            bwr.write("Nilai " + "|" + " Frekuensi "  + "|");
             bwr.newLine();
-            for (Integer nilai : key) {
-                bwr.write(nilai + " " + "|" + Map.get(nilai));
-            }
+            bwr.write("\t 5"    + "|  " + hMap.get(5)  + "|");
+            bwr.newLine();
+            bwr.write("\t6"    + "|  " + hMap.get(6)  + "|");
+            bwr.newLine();
+            bwr.write("\t7"    + "|  " + hMap.get(7)  + "|");
+            bwr.newLine();
+            bwr.write("\t8"    + "|  " + hMap.get(8)  + "|");
+            bwr.newLine();
+            bwr.write("\t9"    + "|  " + hMap.get(9)  + "|");
+            bwr.newLine();
+            bwr.write("\t10"   + "|  " + hMap.get(10) + "|");
+
+
             bwr.flush();
             bwr.close();
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (IOException | InputMismatchException | NullPointerException | IndexOutOfBoundsException e) {
+            System.err.println("Tidak dapat menulis file pengelompokkan data\n");
         }
 
     }
@@ -139,13 +148,13 @@ public class ReadWrite {
         return temp;
     }
 
-    private Map<Integer, Integer> freq(List<Integer> array) {
+    public Map<Integer, Integer> freq(List<Integer> array) {
         Set<Integer> distinct = new HashSet<>(array);
-        Map<Integer, Integer> Map = new HashMap<>();
+        Map<Integer, Integer> mMap = new HashMap<>();
 
         for (Integer s : distinct) {
-            Map.put(s, Collections.frequency(array, s));
+            mMap.put(s, Collections.frequency(array, s));
         }
-        return Map;
+        return mMap;
     }
 }

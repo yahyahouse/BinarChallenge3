@@ -1,6 +1,7 @@
+import java.io.IOException;
 import java.util.Scanner;
 @FunctionalInterface
 public interface Menu {
-    void ShowMenu();
+    void ShowMenu() throws IOException;
 
 }
