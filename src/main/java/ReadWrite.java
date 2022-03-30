@@ -79,17 +79,17 @@ public class ReadWrite {
             bwr.newLine();
             bwr.write("Nilai " + "|" + " Frekuensi "  + "|");
             bwr.newLine();
-            bwr.write("\t 5"    + "|  " + hMap.get(5)  + "|");
+            bwr.write("5\t"    + "|\t" + hMap.get(5)  + "\t|");
             bwr.newLine();
-            bwr.write("\t6"    + "|  " + hMap.get(6)  + "|");
+            bwr.write("6\t"    + "|\t" + hMap.get(6)  + "\t|");
             bwr.newLine();
-            bwr.write("\t7"    + "|  " + hMap.get(7)  + "|");
+            bwr.write("7\t"    + "|\t" + hMap.get(7)  + "\t|");
             bwr.newLine();
-            bwr.write("\t8"    + "|  " + hMap.get(8)  + "|");
+            bwr.write("8\t"    + "|\t" + hMap.get(8)  + "\t|");
             bwr.newLine();
-            bwr.write("\t9"    + "|  " + hMap.get(9)  + "|");
+            bwr.write("9\t"    + "|\t" + hMap.get(9)  + "\t|");
             bwr.newLine();
-            bwr.write("\t10"   + "|  " + hMap.get(10) + "|");
+            bwr.write("10\t"   + "|\t" + hMap.get(10) + "\t|");
 
 
             bwr.flush();

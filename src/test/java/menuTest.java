@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class menuTest {
     @Test
     @DisplayName("Test untuk Menu Utama")
-    void MenuTest() throws IOException {
+    void MenuTest() {
             Menu menu = () -> {
                 System.out.println("================================");
                 System.out.println("Aplikasi Pengolah Nilai Siswa ");
@@ -36,9 +36,33 @@ public class menuTest {
 //                    Menu();
             }
     }
-//
-//    @Test
-//    void writeMod() throws IOException {
-//        Assertions.assertEquals(2,menuShow.Menu(2));
-//    }
+    @Test
+    @DisplayName("Test untuk Menu Utama Negative")
+    void MenuTestNegative() {
+        Menu menu = () -> {
+            System.out.println("================================");
+            System.out.println("Aplikasi Pengolah Nilai Siswa ");
+            System.out.println("================================");
+            System.out.println("File akan dibaca di <src/main/resources/data_sekolah.csv>");
+            System.out.println("1. Menghitung Mean-Median-Modus");
+            System.out.println("2. Menghitung Modus Sekolah");
+            System.out.println("0. Exit");
+        };
+        menu.ShowMenu();
+        int pilih = 9;
+        switch (pilih) {
+            case 1:
+//                    readWrite.write(MeanMedianModus);
+                break;
+            case 2:
+//                    readWrite.writeMod(Modus);
+                break;
+            case 0:
+//                    System.exit(0);
+                break;
+            default:
+                System.err.println("Masukan pilihan yang benar!");
+//                    Menu();
+        }
+    }
 }

@@ -8,7 +8,6 @@ public class MenuShow {
     public static String MeanMedianModus = "src/main/resources/MeanMedianModus.txt";
     public static String Modus = "src/main/resources/modus.txt";
     public static void Menu() {
-        try {
         Scanner scan = new Scanner(System.in);
         ReadWrite readWrite = new ReadWrite();
         Menu menu = () -> {
@@ -36,10 +35,6 @@ public class MenuShow {
                     System.err.println("Masukan pilihan yang benar!");
                     Menu();
             }
-        }catch (InputMismatchException | IOException e){
-            System.err.println(" Masukan pilihan dengan input angka "+ e.getMessage());
-            Menu();
-        }
 
     }
 }
